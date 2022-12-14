@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
 const { secret, staticPath } = require('../config')
 const fs = require('fs')
-const path = require('path')
-
+const {resolve} = require('path')
+const defaultimg = resolve('../static/default.png')
 const generateAccessToken = (id, roles) => {
     const payload = {
         id,
@@ -31,7 +31,7 @@ class authController {
             const hashPassword = bcrypt.hashSync(password, 7)
             const userRole = await Role.findOne({ value: "USER" })
 
-            const defaultAvatar = fs.readFileSync(path.join(staticPath, '\\default.png')).toString('base64')
+            const defaultAvatar = fs.readFileSync(defaultimg).toString('base64')
 
             const user = new User({
                 email,
