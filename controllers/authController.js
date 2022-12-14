@@ -3,11 +3,7 @@ const Role = require('../models/Role')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
-const { secret } = require('../config')
-const { resolve } = require('path')
-const fs = require('fs')
-const path = require('path')
-const process = require('process')
+const { secret, defaultImg } = require('../config')
 
 const generateAccessToken = (id, roles) => {
     const payload = {
@@ -32,9 +28,7 @@ class authController {
             }
             const hashPassword = bcrypt.hashSync(password, 7)
             const userRole = await Role.findOne({ value: "USER" })
-            const file = await resolve('../static/default.png')
-            // const file = path.join(process.cwd(), '../static/default.png')
-            const defaultAvatar = fs.readFileSync(file).toString('base64')
+            const defaultAvatar = defaultImg
 
             const user = new User({
                 email,
