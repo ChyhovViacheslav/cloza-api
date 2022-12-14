@@ -3,11 +3,11 @@ const Role = require('../models/Role')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
-const { secret, staticPath } = require('../config')
+const { secret } = require('../config')
 const fs = require('fs')
 const path = require('path')
 const process = require('process')
-const defaultimg = resolve('../static/default.png')
+
 const generateAccessToken = (id, roles) => {
     const payload = {
         id,
@@ -47,7 +47,7 @@ class authController {
             })
             user.save()
 
-            return res.json({ 
+            return res.json({
                 username,
                 email,
                 image: user.image,
@@ -56,7 +56,7 @@ class authController {
                 delivery_info: user.delivery_info,
                 _id: user._id,
                 registerDate
-             })
+            })
         } catch (error) {
             console.log(error)
             res.status(400).json({ message: 'Registration error' })
@@ -141,11 +141,11 @@ class authController {
             const usersLength = await User
                 .find()
 
-            res.json({ 
-                users: perpage === '999' ? usersLength : users, 
-                currentPage: page, 
-                totalPages: Math.ceil(usersLength.length / perpage), 
-                totalUsers: usersLength.length 
+            res.json({
+                users: perpage === '999' ? usersLength : users,
+                currentPage: page,
+                totalPages: Math.ceil(usersLength.length / perpage),
+                totalUsers: usersLength.length
             })
         } catch (error) {
             console.log(error)
@@ -162,10 +162,10 @@ class authController {
 
             if (user) {
                 user.username = username || user.username,
-                user.wishlist = wishlist || user.wishlist,
-                user.cartlist = cartlist || user.cartlist,
-                user.delivery_info = delivery_info || user.delivery_info,
-                user.image = image || user.image
+                    user.wishlist = wishlist || user.wishlist,
+                    user.cartlist = cartlist || user.cartlist,
+                    user.delivery_info = delivery_info || user.delivery_info,
+                    user.image = image || user.image
             }
 
             user.save()
