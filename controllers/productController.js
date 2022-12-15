@@ -1,5 +1,4 @@
 const Product = require('../models/Product')
-const { check } = require('express-validator')
 
 class productController {
     async addProduct(req, res) {
