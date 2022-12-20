@@ -8,7 +8,7 @@ class orderController {
             return res.json({message: 'Заказ успешно создан!'})
         } catch (error) {
             console.log(error);
-            res.status(400).json({message: 'Заказ успешно создан!'})
+            res.status(400).json({message: 'Error creating order!'})
         }
     }
 }

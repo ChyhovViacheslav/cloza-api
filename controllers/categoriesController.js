@@ -7,7 +7,7 @@ class categoriesController {
             return res.json(categories)
         } catch (error) {
             console.log(error)
-            return res.status(400).json({message: 'Error geting categories'})
+            return res.status(400).json({message: 'Error geting brands'})
         }
     }
 }

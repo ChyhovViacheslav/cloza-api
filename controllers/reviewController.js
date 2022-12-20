@@ -10,6 +10,7 @@ class reviewController {
             return res.json({ message: 'Review added!' })
         } catch (error) {
             console.log(error)
+            res.status(400).json('Error additng review')
         }
     }
     async getAllReviews(req, res) {
@@ -45,8 +46,8 @@ class reviewController {
                 totalPages: Math.ceil(totalReviews.length / perpage)
             })
         } catch (error) {
-            res.status(400).json('Error getting review')
             console.log(error)
+            res.status(400).json('Error getting reviews')
         }
     }
 }

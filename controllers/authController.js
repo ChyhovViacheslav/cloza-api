@@ -116,18 +116,6 @@ class authController {
         const page = req.query.page || 1
         const perpage = req.query.limit || 12
 
-        const checkedQuqery = (query) => {
-            if (query === undefined || query === 'undefined') {
-                return { "$exists": true }
-            } else return query
-        }
-
-        const checkedSort = (query) => {
-            if (query === undefined || query === 'undefined' || query === '0') {
-                return 0
-            } else return query
-        }
-
         try {
             const users = await User
                 .find()
@@ -169,6 +157,7 @@ class authController {
             res.json({ message: 'Changed sucess!' })
         } catch (error) {
             console.log(error);
+            return res.status(400).json({ message: 'Error changing user info' })
         }
     }
 }

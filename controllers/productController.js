@@ -59,6 +59,7 @@ class productController {
             })
         } catch (error) {
             console.log(error);
+            res.status(400).json({message: 'Error geting products'})
         }
     }
     async getProduct(req, res) {
@@ -71,6 +72,7 @@ class productController {
             return res.json(product)
         } catch (error) {
             console.log(error);
+            res.status(400).json({message: 'Error geting product'})
         }
     }
     async updateProduct(req, res) {
@@ -96,6 +98,7 @@ class productController {
             return res.json(product)
         } catch (error) {
             console.log(error);
+            res.status(400).json({message: 'Error deleting product'})
         }
     }
 }
