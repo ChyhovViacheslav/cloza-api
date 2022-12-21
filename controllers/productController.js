@@ -5,7 +5,7 @@ class productController {
         try {
             const product = new Product(req.body)
             await product.save()
-            return res.json({ message: 'Продукт успешно добавлен' })
+            return res.json({ message: 'Product added successfully' })
         } catch (error) {
             console.log(error);
             res.status(400).json({ message: 'Error adding product' })
@@ -36,9 +36,11 @@ class productController {
                 brand: chekedQuery(req.query.brands),
                 subCategory: chekedQuery(req.query.subcategory),
                 mainCategory: chekedQuery(req.query.maincategory),
-                discount: queryDiscount === 'undefined' ? { "$exists": true } : { "$gt": minPrice, "$lt": maxPrice },
+                discount: queryDiscount === 'undefined' 
+                ? { "$exists": true } : { "$gt": minPrice, "$lt": maxPrice },
                 "saler.email": chekedQuery(req.query.salerEmail),
-                price: queryPrice === undefined ? { "$exists": true } : { "$gt": minPrice, "$lt": maxPrice }
+                price: queryPrice === undefined 
+                ? { "$exists": true } : { "$gt": minPrice, "$lt": maxPrice }
             }
 
             const products = await Product
@@ -59,30 +61,30 @@ class productController {
             })
         } catch (error) {
             console.log(error);
-            res.status(400).json({message: 'Error geting products'})
+            res.status(400).json({message: 'Error getting products'})
         }
     }
     async getProduct(req, res) {
         try {
             const { id } = req.params
             if (!id) {
-                res.status(400).json({ message: 'ID не указан' })
+                res.status(400).json({ message: 'ID not specified' })
             }
             const product = await Product.findById(id)
             return res.json(product)
         } catch (error) {
             console.log(error);
-            res.status(400).json({message: 'Error geting product'})
+            res.status(400).json({message: 'Error getting product'})
         }
     }
     async updateProduct(req, res) {
         try {
             const product = req.body
             if (!product._id) {
-                res.status(400).json({ message: 'ID не указан' })
+                res.status(400).json({ message: 'ID not specified' })
             }
             const updatedPost = await Product.findByIdAndUpdate(product._id, product, { new: true })
-            return res.json({ message: 'Продукт успешно обновлён' })
+            return res.json({ message: 'Product updated successfully' })
         } catch (error) {
             console.log(error);
             res.status(400).json({ message: 'Error updating product' })
@@ -92,7 +94,7 @@ class productController {
         try {
             const { id } = req.params
             if (!id) {
-                res.status(400).json({ message: 'ID не указан' })
+                res.status(400).json({ message: 'ID not specified' })
             }
             const product = await Product.findByIdAndDelete(id)
             return res.json(product)

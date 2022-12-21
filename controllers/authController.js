@@ -14,18 +14,19 @@ const generateAccessToken = (id, roles) => {
 }
 
 class authController {
-
     async registration(req, res) {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
-                return res.status(400).json({ message: 'Ошибка при регистрации', errors })
+                return res.status(400).json({ message: 'Registration error', errors })
             }
             const { username, password, email, registerDate } = req.body
             const candidate = await User.findOne({ email })
+
             if (candidate) {
-                return res.status(400).json({ message: 'Пользователь с такой почтой уже существует' })
+                return res.status(400).json({ message: 'User with this email already exists' })
             }
+
             const hashPassword = bcrypt.hashSync(password, 7)
             const userRole = await Role.findOne({ value: "USER" })
             const defaultAvatar = defaultImg
@@ -64,11 +65,11 @@ class authController {
             const { email, password } = req.body
             const user = await User.findOne({ email })
             if (!user) {
-                return res.status(400).json({ message: `Пользователь с такой почтой не найден` })
+                return res.status(400).json({ message: `User with this email not found` })
             }
             const validPassword = bcrypt.compareSync(password, user.password)
             if (!validPassword) {
-                return res.status(400).json({ message: `Введён неверный пароль` })
+                return res.status(400).json({ message: `Wrong password entered` })
             }
             const token = generateAccessToken(user._id, user.roles)
             return res.json({
@@ -94,7 +95,7 @@ class authController {
             res.json(user)
         } catch (error) {
             console.log(error)
-            return res.status(400).json({ message: "Error geting user" })
+            return res.status(400).json({ message: "Error getting user" })
         }
     }
 
@@ -102,13 +103,13 @@ class authController {
         try {
             const { id } = req.params
             if (!id) {
-                res.status(400).json({ message: 'ID не указан' })
+                res.status(400).json({ message: 'ID not specified' })
             }
             const user = await User.findById(id)
             res.json(user)
         } catch (error) {
             console.log(error)
-            return res.status(400).json({ message: "Error geting user" })
+            return res.status(400).json({ message: "Error getting user" })
         }
     }
 
@@ -133,7 +134,7 @@ class authController {
             })
         } catch (error) {
             console.log(error)
-            return res.status(400).json({ message: "Error geting users" })
+            return res.status(400).json({ message: "Error getting users" })
         }
     }
 

@@ -29,10 +29,15 @@ class brandsController {
                 }
             }
 
-            return res.json({ brands: checkedQuqery(perpage), currentPage: page, totalPages: Math.ceil(newBrands.length / perpage), totalBrands: newBrands.slice(1).length})
+            return res.json({
+                brands: checkedQuqery(perpage),
+                currentPage: page,
+                totalPages: Math.ceil(newBrands.length / perpage),
+                totalBrands: newBrands.slice(1).length
+            })
         } catch (error) {
             console.log(error);
-            return res.status(400).json({ message: 'Error geting brands' })
+            return res.status(400).json({ message: 'Error getting brands' })
         }
     }
 }
